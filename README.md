@@ -1,16 +1,7 @@
-# ranking_maker
+# RankingMaker
 
-A new Flutter project.
+A new Flutter project to create an app to help making rankings about anything.
 
-## Getting Started
+## Motivation
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This project is inspired by TierMaker. I like to make ranks mostly about songs, and I found the tier system not as interesting as the one which every element is alone in their tier, and usually is defined by numbers with the number one being the higher rank possible, I will call it top 1/n system. The problem is, it's extremely annoying to make a top 1/n rank if n is a big number, so I wanted to make an app to help me.
