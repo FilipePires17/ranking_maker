@@ -13,12 +13,21 @@ class LocalRankingRepository implements IRankingRepository {
     // TODO: Implement fetching from local storage
     return Success<Ranking, String>(
       Ranking(
+        0,
         <RankItem>[
           RankItem('John Doe'),
           RankItem('Jane Doe'),
           RankItem('Alice'),
         ],
+        'Ranking',
       ),
     );
+  }
+
+  @override
+  Future<Result<void, String>> reorderRanking(
+      int id, List<RankItem> rankingItems) {
+    // TODO: implement reorderRanking
+    throw UnimplementedError();
   }
 }
