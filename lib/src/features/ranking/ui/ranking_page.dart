@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../constants/hive/sizes/app_sizes.dart';
 import '../model/ranking.dart';
 import '../repositories/local_ranking_repository.dart';
 import 'ranking_view_model.dart';
@@ -31,41 +32,50 @@ class _RankingPageState extends State<RankingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(ranking.title),
-      ),
-      body: ReorderableListView(
-        physics: const NeverScrollableScrollPhysics(),
-        children: List<Widget>.generate(
-          ranking.rankingItems.length,
-          (int index) => CustomItemTile(
-            ranking.rankingItems[index],
-            index,
-            key: ValueKey<int>(index),
+      body: Column(
+        children: <Widget>[
+          gapH40,
+          Row(
+            children: <Widget>[
+              gapW16,
+              const Icon(
+                Icons.arrow_back_ios,
+              ),
+              gapW16,
+              Expanded(
+                child: TextFormField(
+                  initialValue: ranking.title,
+                  style: const TextStyle(
+                    fontSize: Sizes.p24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                  ),
+                  onTapOutside: (PointerDownEvent event) {
+                    FocusScope.of(context).unfocus();
+                  },
+                ),
+              ),
+            ],
           ),
-        ),
-        onReorder: (int oldIndex, int newIndex) {
-          // if (oldIndex < newIndex) {
-          //   newIndex -= 1;
-          // }
-
-          // if (oldIndex % 2 == 0) {
-          //   //separator - should never happen
-          //   return;
-          // }
-
-          // if ((oldIndex - newIndex).abs() == 1) {
-          //   //moved behind the top/bottom separator
-          //   return;
-          // }
-
-          // newIndex = oldIndex > newIndex && newIndex % 2 == 1
-          //     ? (newIndex + 1) ~/ 2
-          //     : newIndex ~/ 2;
-          // oldIndex = oldIndex ~/ 2;
-          // onReorder.call(oldIndex, newIndex);
-          rankingViewModel.reorder(ranking.id, oldIndex, newIndex);
-        },
+          Expanded(
+            child: ReorderableListView(
+              physics: const NeverScrollableScrollPhysics(),
+              children: List<Widget>.generate(
+                ranking.rankingItems.length,
+                (int index) => CustomItemTile(
+                  ranking.rankingItems[index],
+                  index,
+                  key: ValueKey<int>(index),
+                ),
+              ),
+              onReorder: (int oldIndex, int newIndex) {
+                rankingViewModel.reorder(oldIndex, newIndex);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

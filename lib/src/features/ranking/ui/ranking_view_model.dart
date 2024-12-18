@@ -29,7 +29,7 @@ class RankingViewModel extends ChangeNotifier {
     });
   }
 
-  void reorder(int id, int oldIndex, int newIndex) {
+  void reorder(int oldIndex, int newIndex) {
     final RankItem item = ranking.rankingItems.removeAt(oldIndex);
     if (newIndex > oldIndex) {
       newIndex -= 1;
@@ -40,5 +40,10 @@ class RankingViewModel extends ChangeNotifier {
 
   void saveRanking() {
     // _rankingRepository.reorderRanking(ranking.id, ranking.rankingItems);
+  }
+
+  void editItem(int index, String name) {
+    ranking.rankingItems[index] =
+        ranking.rankingItems[index].copyWith(name: name);
   }
 }

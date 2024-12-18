@@ -29,26 +29,30 @@ class CustomItemTile extends StatelessWidget {
             Text(
               '${index + 1}',
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: Sizes.p16,
                 color: Colors.grey,
               ),
             ),
             const VerticalDivider(
               color: Colors.grey,
               thickness: 1,
-              indent: 10,
-              endIndent: 10,
+              indent: Sizes.p10,
+              endIndent: Sizes.p10,
             ),
             gapW12,
             Expanded(
-              child: Text(
-                item.name,
+              child: TextFormField(
+                initialValue: item.name,
                 style: const TextStyle(
                   fontSize: Sizes.p16,
                   color: Colors.grey,
-                  fontWeight: FontWeight.w500,
-                  decoration: TextDecoration.underline,
                 ),
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                ),
+                onTapOutside: (PointerDownEvent event) {
+                  FocusScope.of(context).unfocus();
+                },
               ),
             ),
           ],
