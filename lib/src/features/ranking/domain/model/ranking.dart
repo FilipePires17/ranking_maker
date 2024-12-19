@@ -1,7 +1,7 @@
 import 'rank_item.dart';
 
 class Ranking {
-  int id;
+  String id;
   List<RankItem> rankingItems;
   String title;
 

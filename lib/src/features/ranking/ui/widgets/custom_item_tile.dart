@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../constants/hive/sizes/app_sizes.dart';
-import '../../model/rank_item.dart';
+import '../../../../constants/sizes/app_sizes.dart';
+import '../../domain/model/rank_item.dart';
 
 class CustomItemTile extends StatelessWidget {
   const CustomItemTile(this.item, this.index, {super.key});

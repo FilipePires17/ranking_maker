@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
-import '../../../constants/hive/sizes/app_sizes.dart';
-import '../model/ranking.dart';
-import '../repositories/local_ranking_repository.dart';
-import 'ranking_view_model.dart';
-import 'widgets/custom_item_tile.dart';
+import '../../../../constants/sizes/app_sizes.dart';
+import '../../domain/model/ranking.dart';
+import '../view_models/ranking_view_model.dart';
+import '../widgets/custom_item_tile.dart';
 
 class RankingPage extends StatefulWidget {
-  const RankingPage({super.key});
+  const RankingPage({super.key, this.id});
+
+  final String? id;
 
   @override
   State<RankingPage> createState() => _RankingPageState();
 }
 
 class _RankingPageState extends State<RankingPage> {
-  late final RankingViewModel rankingViewModel =
-      RankingViewModel(LocalRankingRepository());
+  late final RankingViewModel rankingViewModel = RankingViewModel();
 
   Ranking get ranking => rankingViewModel.ranking;
 
@@ -26,7 +27,11 @@ class _RankingPageState extends State<RankingPage> {
       setState(() {});
     });
 
-    rankingViewModel.loadRanking(0);
+    if (widget.id != null) {
+      rankingViewModel.loadRanking(widget.id!);
+    } else {
+      rankingViewModel.createRanking(const Uuid().v4());
+    }
   }
 
   @override
@@ -38,8 +43,13 @@ class _RankingPageState extends State<RankingPage> {
           Row(
             children: <Widget>[
               gapW16,
-              const Icon(
-                Icons.arrow_back_ios,
+              IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
               gapW16,
               Expanded(

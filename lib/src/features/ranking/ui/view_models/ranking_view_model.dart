@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/result.dart';
-import '../model/rank_item.dart';
-import '../model/ranking.dart';
-import '../repositories/local_ranking_repository.dart';
+import '../../../../core/result.dart';
+import '../../data/services/local_ranking_service.dart';
+import '../../domain/model/rank_item.dart';
+import '../../domain/model/ranking.dart';
+import '../../data/repositories/local_ranking_repository.dart';
 
 class RankingViewModel extends ChangeNotifier {
-  final Ranking ranking = Ranking(0, <RankItem>[], '');
+  final Ranking ranking = Ranking('', <RankItem>[], '');
 
-  final LocalRankingRepository _rankingRepository;
+  final LocalRankingRepository _rankingRepository =
+      LocalRankingRepository(LocalRankingService());
 
-  RankingViewModel(this._rankingRepository);
-
-  void loadRanking(int id) {
+  void loadRanking(String id) {
     _rankingRepository
         .getRankingById(id)
         .then((Result<Ranking, String> result) {
       result.fold(
         (Ranking rankingResult) {
+          ranking.id = rankingResult.id;
           ranking.title = rankingResult.title;
           ranking.rankingItems = rankingResult.rankingItems;
           notifyListeners();
@@ -45,5 +46,13 @@ class RankingViewModel extends ChangeNotifier {
   void editItem(int index, String name) {
     ranking.rankingItems[index] =
         ranking.rankingItems[index].copyWith(name: name);
+  }
+
+  void createRanking(String id) {
+    ranking.id = id;
+    ranking.rankingItems = <RankItem>[];
+    ranking.title = '';
+
+    notifyListeners();
   }
 }
