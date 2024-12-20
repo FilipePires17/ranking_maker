@@ -30,4 +30,13 @@ class LocalRankingRepository implements IRankingRepository {
     // TODO: implement getRankingIds
     throw UnimplementedError();
   }
+
+  @override
+  Future<Result<void, String>> saveRanking(Ranking ranking) async {
+    if (ranking.id.isEmpty) {
+      return Failure<void, String>('Invalid id');
+    }
+
+    return _localRankingService.saveRanking(ranking);
+  }
 }

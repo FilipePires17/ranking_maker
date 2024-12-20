@@ -65,6 +65,10 @@ class _RankingPageState extends State<RankingPage> {
                   onTapOutside: (PointerDownEvent event) {
                     FocusScope.of(context).unfocus();
                   },
+                  onChanged: (String value) {
+                    ranking.title = value;
+                    rankingViewModel.saveRanking();
+                  },
                 ),
               ),
             ],

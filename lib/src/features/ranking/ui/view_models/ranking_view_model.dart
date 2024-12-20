@@ -8,6 +8,10 @@ import '../../data/repositories/local_ranking_repository.dart';
 
 class RankingViewModel extends ChangeNotifier {
   final Ranking ranking = Ranking('', <RankItem>[], '');
+  String errorMsg = '';
+  bool _hasError = false;
+
+  bool get hasError => _hasError;
 
   final LocalRankingRepository _rankingRepository =
       LocalRankingRepository(LocalRankingService());
@@ -24,7 +28,9 @@ class RankingViewModel extends ChangeNotifier {
           notifyListeners();
         },
         (String failure) {
-          // Handle failure
+          errorMsg = failure;
+          _hasError = true;
+          notifyListeners();
         },
       );
     });
@@ -40,7 +46,16 @@ class RankingViewModel extends ChangeNotifier {
   }
 
   void saveRanking() {
-    // _rankingRepository.reorderRanking(ranking.id, ranking.rankingItems);
+    _rankingRepository.saveRanking(ranking).then((Result<void, String> result) {
+      result.fold(
+        (_) {},
+        (String failure) {
+          errorMsg = failure;
+          _hasError = true;
+          notifyListeners();
+        },
+      );
+    });
   }
 
   void editItem(int index, String name) {

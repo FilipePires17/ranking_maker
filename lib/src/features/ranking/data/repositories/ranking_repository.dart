@@ -9,4 +9,6 @@ abstract class IRankingRepository {
       String id, List<RankItem> rankingItems);
 
   Future<Result<List<String>, String>> getRankingIds();
+
+  Future<Result<void, String>> saveRanking(Ranking ranking);
 }
