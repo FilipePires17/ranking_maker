@@ -16,7 +16,7 @@ class RankingPage extends StatefulWidget {
 }
 
 class _RankingPageState extends State<RankingPage> {
-  late final RankingViewModel rankingViewModel = RankingViewModel();
+  final RankingViewModel rankingViewModel = RankingViewModel();
 
   Ranking get ranking => rankingViewModel.ranking;
 
